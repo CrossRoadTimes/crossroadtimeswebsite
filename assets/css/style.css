@@ -1023,6 +1023,14 @@ textarea.input-field {
    * BLOG
    */
 
+
+  .card-banner img-holder{
+    --width: 860; --height: 646;
+  }
+  .img-cover{
+    width:"860"; height:"646" ;
+  }
+
   .blog .grid-list {
     grid-template-columns: 1fr 1fr;
     row-gap: 20px;
