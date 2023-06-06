@@ -27,6 +27,46 @@
     href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet">
     <script src="script.js"></script>
+    <style>
+      #news-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Horizontally center the news cards */
+}
+
+.news-card {
+  flex: 0 0 300px; /* Set a fixed width of 300px */
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+/* Add media query for smaller screens */
+@media (max-width: 600px) {
+  .news-card {
+    flex-basis: calc(50% - 20px); /* Show two cards per row with 20px spacing */
+  }
+}
+      .news-card h2 {
+        font-size: 16px;
+        margin-top: 0;
+      }
+      .news-card p {
+        font-size: 14px;
+      }
+      .news-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+      .news-card .date {
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
 </head>
 
 <body id="top">
@@ -119,12 +159,62 @@
         </div>
       </section>
 
+      <!-- 
+        - #NEWS
+      -->  
 
+      <h2 class="h2 section-title">Trending Today</h2>
+
+      <div id="news-container"></div>
+
+      <script>
+        function getNews() {
+          fetch('https://api.newscatcherapi.com/v2/search?q=%22Startup%22&lang=en&countries=IN&page_size=4', {
+            method: 'GET',
+            headers: {
+              'x-api-key': 'i8S8AfkHJAyvj5syhmlncjYdv1rfdTb6UprAAg0hiBs' // Replace with your actual API key
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            const newsContainer = document.getElementById('news-container');
+            
+            data.articles.forEach(article => {
+              const newsCard = document.createElement('div');
+              newsCard.classList.add('news-card');
+    
+              const image = document.createElement('img');
+              image.src = article.media;
+    
+              const title = document.createElement('h2');
+              title.textContent = article.title;
+    
+              const description = document.createElement('p');
+              description.textContent = article.summary;
+    
+              const date = document.createElement('p');
+              date.classList.add('date');
+              date.textContent = new Date(article.published_date).toDateString();
+    
+              newsCard.appendChild(image);
+              newsCard.appendChild(title);
+              newsCard.appendChild(description);
+              newsCard.appendChild(date);
+              newsContainer.appendChild(newsCard);
+            });
+          })
+          .catch(error => {
+            console.log('Error:', error);
+          });
+        }
+    
+        document.addEventListener('DOMContentLoaded', getNews);
+      </script>
       <!-- 
         - #BLOG
       -->
 
-      <section class="section blog" id="blog" aria-label="blog">
+      <!-- <section class="section blog" id="blog" aria-label="blog">
         <div class="container">
 
           <h2 class="h2 section-title">Trending Today</h2>
@@ -175,13 +265,13 @@
                 </div>
 
               </div>
-            </li>
+            </li> -->
 
-            <li>
+            <!-- <li>
               <div class="blog-card grid">
 
                 <figure class="card-banner img-holder" style="--width: 860; --height: 646;">
-                  <img src="./assets/images/blog-3.jpg" width="860" height="646" loading="lazy"
+                  <img src="./assets/images/blog-2.jpg" width="860" height="646" loading="lazy"
                     alt="The Guide to Running a Client Discovery Process" class="img-cover">
                 </figure>
 
@@ -238,14 +328,14 @@
                 </div>
 
               </div>
-            </li> -->
+            </li> 
 
           </ul>
 
         </div>
-      </section>
+      </section> --> -->
 
-
+    
       <!-- 
         - #SERVICE
       -->
